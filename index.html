@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Message for You 💖 | From Siyam</title>
+  <meta name="description" content="A romantic, interactive proposal website built with love by Siyam for his girl. Let's make a memory together!">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Hearts Background Container -->
+  <div id="hearts-container" class="hearts-container"></div>
+
+  <!-- Main Romantic Card Wrapper -->
+  <main class="app-container">
+    <div class="card glassmorphic" id="proposal-card">
+      
+      <!-- STEP 1: Welcome / Entry -->
+      <section id="step-welcome" class="wizard-step active">
+        <div class="emoji-illustration heart-pulse">💖</div>
+        <h1 class="main-title font-pacifico" id="welcome-title">Hey love, Siyam is waiting 💖</h1>
+        <p class="subtitle">He has prepared a very special question for you. Are you ready to see it?</p>
+        <button type="button" class="btn btn-glow btn-primary" id="btn-start">
+          Enter His Heart ✨
+        </button>
+      </section>
+
+      <!-- STEP 2: Date Selector -->
+      <section id="step-date" class="wizard-step">
+        <div class="emoji-illustration">📅</div>
+        <h2 class="section-title font-pacifico" id="date-title">When shall we meet?</h2>
+        <p class="subtitle">Choose a special day for our next sweet date.</p>
+        
+        <div class="form-group">
+          <label for="date-input" class="sr-only">Choose a Date</label>
+          <input type="date" id="date-input" class="date-picker-custom" required>
+        </div>
+        
+        <div class="button-row">
+          <button type="button" class="btn btn-secondary" id="btn-back-to-welcome">Back</button>
+          <button type="button" class="btn btn-glow btn-primary" id="btn-next-location">Next: Pick Location ➔</button>
+        </div>
+      </section>
+
+      <!-- STEP 3: Location Selector -->
+      <section id="step-location" class="wizard-step">
+        <div class="emoji-illustration" id="location-emoji">📍</div>
+        <h2 class="section-title font-pacifico" id="location-title">Where shall we go?</h2>
+        <p class="subtitle" id="location-subtitle">Every place in Dhaka becomes magical with you by my side.</p>
+        
+        <div class="form-group">
+          <div class="select-wrapper">
+            <select id="location-select" class="location-picker-custom" required>
+              <option value="" disabled selected>Select a romantic spot...</option>
+              <option value="DIU">Daffodil International University (DIU) 🏫</option>
+              <option value="Diabari">Diabari (Uttara) 🌾</option>
+              <option value="Dhanmondi Lake">Dhanmondi Lake 🌳</option>
+              <option value="Hatirjheel">Hatirjheel Lakefront 🌉</option>
+              <option value="Puran Dhaka">Puran Dhaka (Traditional Food Tour) 🍲</option>
+              <option value="Lalbagh Fort">Lalbagh Fort 🏰</option>
+              <option value="No meet">No meet (I'm teasing you!) 😡</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button type="button" class="btn btn-secondary" id="btn-back-to-date">Back</button>
+          <button type="button" class="btn btn-glow btn-primary" id="btn-submit-proposal">Submit Plan 💕</button>
+        </div>
+      </section>
+
+      <!-- STEP 4: Success / Confirmation -->
+      <section id="step-success" class="wizard-step">
+        <div class="emoji-illustration success-animation">🎉👩‍❤️‍👨</div>
+        <h2 class="section-title font-pacifico">Yay! Can’t wait! 💕</h2>
+        <p class="subtitle confirmation-text" id="confirmation-msg">
+          It's officially a date! Can't wait to meet you.
+        </p>
+        
+        <div class="romantic-details-card">
+          <div class="detail-item">
+            <span class="detail-label">📅 Date</span>
+            <span class="detail-value" id="final-date">Not set</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">📍 Spot</span>
+            <span class="detail-value" id="final-location">Not set</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-glow btn-primary" id="btn-restart">
+          Plan Another Date! 🌸
+        </button>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Love Quote Footer -->
+  <footer class="love-footer">
+    <p class="love-quote" id="love-quote">“Every moment with you is my favorite 💖”</p>
+    <p class="footer-credit">Made with ❤️ by <span class="heart-pulse-slow">Siyam</span></p>
+  </footer>
+
+  <!-- Siyam's Key - Secret Memories Trigger -->
+  <button type="button" class="memory-trigger" id="btn-toggle-memories" title="Siyam's Memory Key">
+    🔑
+  </button>
+
+  <!-- Memory of Love Slider Panel -->
+  <div class="memory-overlay" id="memory-overlay">
+    <div class="memory-panel glassmorphic">
+      <div class="memory-header">
+        <h3 class="font-pacifico">Memory of Love 💖</h3>
+        <button type="button" class="btn-close-memory" id="btn-close-memories">&times;</button>
+      </div>
+      <div class="memory-body">
+        <p class="memory-intro">All the times she agreed to make memories with you, Siyam! 💕</p>
+        <div class="teasing-stats" id="teasing-stats-card">
+          <span>Tease Attempts (No Meet): </span>
+          <strong id="no-meet-count">0</strong>
+        </div>
+        <div class="memories-list" id="memories-container">
+          <!-- Dynamically populated from JS -->
+          <div class="empty-state">No memories saved yet. Go plan your first date! 🥰</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript logic -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,706 @@
+/* ==========================================================================
+   Romantic Proposal Website - Styling System
+   Theme: Love & Romance vs. Playful Sad Mode
+   ========================================================================== */
+
+/* Theme Variables */
+:root {
+  /* Fonts */
+  --font-family-body: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-display: 'Pacifico', cursive;
+
+  /* Colors - Happy Romantic Theme */
+  --bg-gradient-1: #ffd1d8;
+  --bg-gradient-2: #ff9fb2;
+  --primary-color: #ff4d6d;
+  --primary-hover: #ff758f;
+  --primary-glow: rgba(255, 77, 109, 0.4);
+  --secondary-color: #f8ad9d;
+  --secondary-hover: #ffb5a7;
+  --text-color: #5c3d42;
+  --text-light: #8a656a;
+  --card-bg: rgba(255, 255, 255, 0.55);
+  --card-border: rgba(255, 255, 255, 0.6);
+  --shadow-color: rgba(255, 77, 109, 0.15);
+  
+  /* Shared Glassmorphism */
+  --glass-blur: 16px;
+  --transition-speed: 0.4s;
+}
+
+/* Playful Sad Theme overrides (.sad-mode) */
+body.sad-mode {
+  --bg-gradient-1: #1a1e36;
+  --bg-gradient-2: #0f111a;
+  --primary-color: #7b2cbf;
+  --primary-hover: #9d4edd;
+  --primary-glow: rgba(123, 44, 191, 0.4);
+  --secondary-color: #3c096c;
+  --secondary-hover: #5a189a;
+  --text-color: #e0aaff;
+  --text-light: #c77dff;
+  --card-bg: rgba(15, 17, 26, 0.7);
+  --card-border: rgba(123, 44, 191, 0.3);
+  --shadow-color: rgba(123, 44, 191, 0.3);
+}
+
+/* Reset and Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-family-body);
+  color: var(--text-color);
+  transition: background var(--transition-speed) ease-in-out, color var(--transition-speed) ease-in-out;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+}
+
+.font-pacifico {
+  font-family: var(--font-family-display);
+  font-weight: 400;
+}
+
+/* Floating Hearts / Broken Hearts Background */
+.hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.heart-particle {
+  position: absolute;
+  bottom: -50px;
+  font-size: 1.5rem;
+  user-select: none;
+  opacity: 0.8;
+  animation: float-up 6s linear forwards;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-105vh) translateX(var(--drift-x)) rotate(var(--rotation));
+    opacity: 0;
+  }
+}
+
+/* Glassmorphic Container */
+.app-container {
+  width: 90%;
+  max-width: 480px;
+  z-index: 10;
+  padding: 10px;
+  perspective: 1000px;
+}
+
+.card {
+  border-radius: 24px;
+  padding: 40px 30px;
+  box-shadow: 0 12px 40px 0 var(--shadow-color);
+  text-align: center;
+  transition: all var(--transition-speed) ease-in-out;
+  transform-style: preserve-3d;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.glassmorphic {
+  background: var(--card-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--card-border);
+}
+
+/* Wizard Steps Control */
+.wizard-step {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  width: 100%;
+}
+
+.wizard-step.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transform: translateY(0);
+  animation: fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animations */
+.heart-pulse {
+  animation: pulse 1.2s infinite alternate cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.heart-pulse-slow {
+  display: inline-block;
+  animation: pulse 2s infinite alternate ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px var(--primary-color));
+  }
+  100% {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 15px var(--primary-color));
+  }
+}
+
+/* Playful Shake animation when she tries to submit 'No Meet' */
+.shake-element {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+/* Typography & Content elements */
+.emoji-illustration {
+  font-size: 5rem;
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+.main-title {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  line-height: 1.3;
+  color: var(--primary-color);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: color var(--transition-speed);
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+  transition: color var(--transition-speed);
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin-bottom: 30px;
+  color: var(--text-light);
+  font-weight: 500;
+  transition: color var(--transition-speed);
+}
+
+/* Form Styling */
+.form-group {
+  width: 100%;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Calendar styling */
+.date-picker-custom {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  border: 2px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-family-body);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  outline: none;
+  transition: all 0.3s;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+body.sad-mode .date-picker-custom {
+  background: rgba(15, 17, 26, 0.5);
+  border-color: var(--card-border);
+  color: var(--text-color);
+}
+
+.date-picker-custom:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* Custom Select styling */
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.location-picker-custom {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  border: 2px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-family-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-color);
+  outline: none;
+  transition: all 0.3s;
+  appearance: none;
+  cursor: pointer;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+body.sad-mode .location-picker-custom {
+  background: rgba(15, 17, 26, 0.5);
+  border-color: var(--card-border);
+  color: var(--text-color);
+}
+
+.location-picker-custom:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* Arrow inside select wrapper */
+.select-wrapper::after {
+  content: "▼";
+  font-size: 0.8rem;
+  color: var(--primary-color);
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: color var(--transition-speed);
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-family-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-3px);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-light);
+  border: 2px solid var(--card-border);
+  margin-right: 10px;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: var(--text-color);
+}
+
+.btn-glow {
+  box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.btn-glow:hover {
+  box-shadow: 0 8px 25px var(--primary-glow);
+}
+
+.button-row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Romantic Details Card (Success Screen) */
+.romantic-details-card {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px dashed var(--primary-color);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: left;
+  transition: all var(--transition-speed);
+}
+
+body.sad-mode .romantic-details-card {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.detail-value {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Love Quote Footer */
+.love-footer {
+  margin-top: 40px;
+  text-align: center;
+  z-index: 10;
+  padding: 20px;
+}
+
+.love-quote {
+  font-family: var(--font-family-display);
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+  transition: color var(--transition-speed);
+}
+
+body.sad-mode .love-quote {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.footer-credit {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  opacity: 0.8;
+  transition: color var(--transition-speed);
+}
+
+/* Siyam's Key - Secret Memories Trigger Button */
+.memory-trigger {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.memory-trigger:hover {
+  transform: scale(1.1) rotate(15deg);
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+  box-shadow: 0 6px 20px var(--primary-glow);
+}
+
+/* Memory Overlay / Slide-out Panel */
+.memory-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.memory-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.memory-panel {
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  background: var(--card-bg);
+  border-left: 1px solid var(--card-border);
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 30px;
+}
+
+.memory-overlay.active .memory-panel {
+  transform: translateX(0);
+}
+
+.memory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--card-border);
+  padding-bottom: 15px;
+}
+
+.memory-header h3 {
+  font-size: 1.6rem;
+  color: var(--primary-color);
+}
+
+.btn-close-memory {
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--text-light);
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.btn-close-memory:hover {
+  color: var(--primary-color);
+}
+
+.memory-intro {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+
+/* Teasing Counter Stats Card */
+.teasing-stats {
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px 15px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+body.sad-mode .teasing-stats {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.teasing-stats strong {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+/* Memories List */
+.memories-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.memories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Custom Scrollbar for list */
+.memories-list::-webkit-scrollbar {
+  width: 6px;
+}
+.memories-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.memories-list::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+  border-radius: 10px;
+}
+
+.memory-item-card {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+  transition: transform 0.2s, background 0.3s;
+}
+
+body.sad-mode .memory-item-card {
+  background: rgba(15, 17, 26, 0.4);
+}
+
+.memory-item-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+body.sad-mode .memory-item-card:hover {
+  background: rgba(15, 17, 26, 0.6);
+}
+
+.memory-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.memory-item-num {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  background: rgba(255, 77, 109, 0.1);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.memory-item-time {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.memory-item-detail {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.memory-item-detail strong {
+  color: var(--primary-color);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-light);
+  height: 100%;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  padding: 40px 20px;
+  line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .card {
+    padding: 30px 20px;
+    min-height: 400px;
+  }
+  
+  .main-title {
+    font-size: 1.8rem;
+  }
+  
+  .section-title {
+    font-size: 1.65rem;
+  }
+  
+  .emoji-illustration {
+    font-size: 4rem;
+  }
+  
+  .memory-panel {
+    max-width: 100%;
+  }
+}
